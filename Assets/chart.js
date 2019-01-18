@@ -8,7 +8,7 @@ var Gantt = function() {
         showToday: true,
         allowMoves: true,
         allowResizes: true,
-        cellWidth: 21,
+        cellWidth: 20.9,  //XXX: workaround for the weekend alignment
         cellHeight: 31,
         slideWidth: 1000,
         vHeaderWidth: 200
