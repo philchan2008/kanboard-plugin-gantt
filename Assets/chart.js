@@ -1,19 +1,7 @@
 // Based on jQuery.ganttView v.0.8.8 Copyright (c) 2010 JC Grubbs - jc.grubbs@devmynd.com - MIT License
 var Gantt = function() {
     this.data = [];
-    if (navigator.userAgent.search("Firefox") >= 0) {
-        this.options = {
-        container: "#gantt-chart",
-        showWeekends: true,
-        showToday: true,
-        allowMoves: true,
-        allowResizes: true,
-        cellWidth: 20.9,
-        cellHeight: 31,
-        slideWidth: 1010,
-        vHeaderWidth: 200
-        };
-    } else {
+    //if (navigator.userAgent.search("Firefox") >= 0) {
         this.options = {
         container: "#gantt-chart",
         showWeekends: true,
@@ -25,7 +13,19 @@ var Gantt = function() {
         slideWidth: 1010,
         vHeaderWidth: 200
         };
-    };
+    //} else {
+    //    this.options = {
+    //    container: "#gantt-chart",
+    //    showWeekends: true,
+    //    showToday: true,
+    //    allowMoves: true,
+    //    allowResizes: true,
+    //    cellWidth: 21,
+    //    cellHeight: 31,
+    //    slideWidth: 1010,
+    //    vHeaderWidth: 200
+    //    };
+    //};
 };
 
 
