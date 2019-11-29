@@ -1,3 +1,6 @@
+/* see https://github.com/kanboard/plugin-gantt/issues/33 */
+.ganttview-grid-row { float: left; } 
+
 div.ganttview-hzheader-month, div.ganttview-hzheader-day, div.ganttview-vtheader, div.ganttview-vtheader-item-name, div.ganttview-vtheader-series, div.ganttview-grid, div.ganttview-grid-row-cell {
     float: left;
 }
