@@ -134,11 +134,21 @@ Gantt.prototype.renderHorizontalHeader = function(dates) {
         for (var m in dates[y]) {
             var w = dates[y][m].length * this.options.cellWidth;
             totalW = totalW + w;
-
+            var mn = m;
+            var lng = "en-GB";
+            try {
+                if ($("body").data('js-lang')) {
+                    lng = $("body").data('js-lang');
+                }
+                mn = $.datepicker.regional[lng].monthNames[m];
+            } catch (e)
+            {
+                console.log("Error", e.stack);
+            }
             monthsDiv.append(jQuery("<div>", {
                 "class": "ganttview-hzheader-month",
                 "css": { "width": (w - 1) + "px" }
-            }).append($.datepicker.regional[$("body").data('js-lang')].monthNames[m] + " " + y));
+            }).append(mn + " " + y));
 
             for (var d in dates[y][m]) {
                 daysDiv.append(jQuery("<div>", { "class": "ganttview-hzheader-day" }).append(dates[y][m][d].getDate()));
