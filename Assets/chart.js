@@ -45,7 +45,7 @@ Gantt.prototype.saveRecord = function(record) {
 Gantt.prototype.show = function() {
     this.data = this.prepareData($(this.options.container).data('records'));
 
-    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth) + 5);
+    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth) + 10);
     var range = this.getDateRange(minDays);
     var startDate = range[0];
     var endDate = range[1];
@@ -132,7 +132,7 @@ Gantt.prototype.renderHorizontalHeader = function(dates) {
 
     for (var y in dates) {
         for (var m in dates[y]) {
-            var w = dates[y][m].length * this.options.cellWidth;
+            var w = dates[y][m].length * this.options.cellWidth * 1.01; //FIXME: +3 to prevent wrapping in Chrome
             totalW = totalW + w;
             var mn = m;
             var lng = "en-GB";
@@ -182,7 +182,7 @@ Gantt.prototype.renderGrid = function(dates) {
             }
         }
     }
-    var w = jQuery("div.ganttview-grid-row-cell", rowDiv).length * this.options.cellWidth;
+    var w = jQuery("div.ganttview-grid-row-cell", rowDiv).length * this.options.cellWidth * 1.01; //FIXME: add 7 to revent grid wrapped to next line
     rowDiv.css("width", w + "px");
     gridDiv.css("width", w + "px");
 
@@ -212,7 +212,7 @@ Gantt.prototype.addBlocks = function(slider, start) {
     for (var i = 0; i < this.data.length; i++) {
         var series = this.data[i];
         var size = this.daysBetween(series.start, series.end) + 1;
-        var offset = this.daysBetween(start, series.start);
+        var offset = this.daysBetween(start, series.start) + 0;
         var text = jQuery("<div>", {
           "class": "ganttview-block-text",
           "css": {
@@ -223,7 +223,7 @@ Gantt.prototype.addBlocks = function(slider, start) {
         var block = jQuery("<div>", {
             "class": "ganttview-block" + (this.options.allowMoves ? " ganttview-block-movable" : ""),
             "css": {
-                "width": ((size * this.options.cellWidth) - 9) + "px",
+                "width": ((size * this.options.cellWidth) - 0) + "px",
                 "margin-left": (offset * this.options.cellWidth) + "px"
             }
         }).append(text);
