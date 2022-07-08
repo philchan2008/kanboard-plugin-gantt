@@ -15,6 +15,9 @@ class Plugin extends Base
         $this->route->addRoute('gantt/:project_id', 'TaskGanttController', 'show', 'plugin');
         $this->route->addRoute('gantt/:project_id/sort/:sorting', 'TaskGanttController', 'show', 'plugin');
 
+        $this->projectAccessMap->add('ProjectGanttController', 'save', Role::PROJECT_MANAGER);
+        $this->projectAccessMap->add('TaskGanttController', 'save', Role::PROJECT_MEMBER);
+
         $this->template->hook->attach('template:project-header:view-switcher', 'Gantt:project_header/views');
         $this->template->hook->attach('template:project:dropdown', 'Gantt:project/dropdown');
         $this->template->hook->attach('template:project-list:menu:after', 'Gantt:project_list/menu');
@@ -55,7 +58,7 @@ class Plugin extends Base
 
     public function getPluginVersion()
     {
-        return '1.0.4';
+        return '1.0.6';
     }
 
     public function getPluginHomepage()

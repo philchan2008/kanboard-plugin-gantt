@@ -1,7 +1,7 @@
 // Based on jQuery.ganttView v.0.8.8 Copyright (c) 2010 JC Grubbs - jc.grubbs@devmynd.com - MIT License
 var Gantt = function() {
     this.data = [];
-    //if (navigator.userAgent.search("Firefox") >= 0) {
+
         this.options = {
         container: "#gantt-chart",
         showWeekends: true,
@@ -13,19 +13,6 @@ var Gantt = function() {
         slideWidth: 1010,
         vHeaderWidth: 200
         };
-    //} else {
-    //    this.options = {
-    //    container: "#gantt-chart",
-    //    showWeekends: true,
-    //    showToday: true,
-    //    allowMoves: true,
-    //    allowResizes: true,
-    //    cellWidth: 21,
-    //    cellHeight: 31,
-    //    slideWidth: 1010,
-    //    vHeaderWidth: 200
-    //    };
-    //};
 };
 
 
@@ -45,7 +32,7 @@ Gantt.prototype.saveRecord = function(record) {
 Gantt.prototype.show = function() {
     this.data = this.prepareData($(this.options.container).data('records'));
 
-    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth) + 10);
+    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth) + 5);
     var range = this.getDateRange(minDays);
     var startDate = range[0];
     var endDate = range[1];
@@ -134,21 +121,11 @@ Gantt.prototype.renderHorizontalHeader = function(dates) {
         for (var m in dates[y]) {
             var w = dates[y][m].length * this.options.cellWidth * 1.01; //FIXME: +3 to prevent wrapping in Chrome
             totalW = totalW + w;
-            var mn = m;
-            var lng = "en-GB";
-            try {
-                if ($("body").data('js-lang')) {
-                    lng = $("body").data('js-lang');
-                }
-                mn = $.datepicker.regional[lng].monthNames[m];
-            } catch (e)
-            {
-                console.log("Error", e.stack);
-            }
+
             monthsDiv.append(jQuery("<div>", {
                 "class": "ganttview-hzheader-month",
                 "css": { "width": (w - 1) + "px" }
-            }).append(mn + " " + y));
+            }).append($.datepicker.regional[$("html").attr('lang')].monthNames[m] + " " + y));
 
             for (var d in dates[y][m]) {
                 daysDiv.append(jQuery("<div>", { "class": "ganttview-hzheader-day" }).append(dates[y][m][d].getDate()));
@@ -212,7 +189,7 @@ Gantt.prototype.addBlocks = function(slider, start) {
     for (var i = 0; i < this.data.length; i++) {
         var series = this.data[i];
         var size = this.daysBetween(series.start, series.end) + 1;
-        var offset = this.daysBetween(start, series.start) + 0;
+        var offset = this.daysBetween(start, series.start);
         var text = jQuery("<div>", {
           "class": "ganttview-block-text",
           "css": {
