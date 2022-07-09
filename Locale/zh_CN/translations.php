@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'Sort by name' => '名称排序',
+    'Sort by ID#' => 'ID#排序',
     'Sort by position' => '按位置排序',
     'Sort by date' => '按日期排序',
     'Add task' => '添加任务',

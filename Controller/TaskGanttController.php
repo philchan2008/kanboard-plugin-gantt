@@ -29,8 +29,13 @@ class TaskGanttController extends BaseController
           $sorting = $this->configModel->get('gantt_task_sort', 'board');
         }
 
+
         if ($sorting === 'date') {
             $filter->getQuery()->asc(TaskModel::TABLE.'.date_started')->asc(TaskModel::TABLE.'.date_creation');
+        } elseif ($sorting === 'id') {
+            $filter->getQuery()->asc(TaskModel::TABLE.'.id'); 
+        } elseif ($sorting === 'name') {
+            $filter->getQuery()->asc(TaskModel::TABLE.'.title'); 
         } else {
             $filter->getQuery()->asc('column_position')->asc(TaskModel::TABLE.'.position');
         }
