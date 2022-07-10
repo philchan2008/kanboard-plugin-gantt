@@ -17,6 +17,31 @@ KB.on('dom.ready', function () {
         var chart = new Gantt();
         chart.show();
 
-        KB.tooltip();
+        //KB.tooltip();
     }
+
+});
+
+$(function() {
+    var isDragging = false;
+    var offsetX = 0;
+    var offsetLeft = 0;
+    $("div.ganttview-slide-container")
+    .mousedown(function(e) {
+        isDragging = true;
+        offsetX = e.pageX; 
+        offsetLeft = $("div.ganttview-slide-container").scrollLeft();
+    })
+    .mousemove(function(e) {
+        if (isDragging) {
+            $("div.ganttview-slide-container").scrollLeft(offsetLeft + (e.pageX - offsetX)*-1);
+        }
+     })
+    .mouseup(function(e) {
+        var wasDragging = isDragging;
+        isDragging = false;
+    });
+    $("div.ganttview-block").mousemove(function(e) { isDragging = false; });
+    $("div.ganttview-vtheader-item").mousemove(function(e) { isDragging = false; });
+    $("div.ganttview-vtheader-item").mousemove(function(e) { isDragging = false; });
 });

@@ -38,7 +38,6 @@ Gantt.prototype.show = function() {
     var endDate = range[1];
     var container = $(this.options.container);
     var chart = jQuery("<div>", { "class": "ganttview" });
-
     chart.append(this.renderVerticalHeader());
     chart.append(this.renderSlider(startDate, endDate));
     container.append(chart);
@@ -88,6 +87,9 @@ Gantt.prototype.renderVerticalHeader = function() {
                 .append(jQuery("<a>", {"href": this.data[i].gantt_link, "title": $(this.options.container).data("label-gantt-link")}).append('<i class="fa fa-sliders"></i>'))
                 .append("&nbsp;")
                 .append(jQuery("<a>", {"href": this.data[i].link}).text(this.data[i].title));
+        }
+        if ( i ==0 ) {
+            seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(''));
         }
         seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-series-name"}).append(content));
         
@@ -157,7 +159,7 @@ Gantt.prototype.renderGrid = function(dates) {
                 if (this.options.showToday && this.isToday(dates[y][m][d])) {
                     cellDiv.addClass("ganttview-today");
                 }
-                rowDiv.append(cellDiv);
+                rowDiv.append(cellDiv); //DEBUG:
             }
         }
     }
@@ -529,3 +531,5 @@ Gantt.prototype.compareDate = function(date1, date2) {
         throw new TypeError(date1 + " - " + date2);
     }
 };
+
+

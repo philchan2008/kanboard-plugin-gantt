@@ -5,6 +5,10 @@ div.ganttview-hzheader-month, div.ganttview-hzheader-day, div.ganttview-vtheader
     float: left;
 }
 
+div.ganttview-vtheader-title {
+    height: 40px;
+}
+
 div.ganttview-hzheader-month, div.ganttview-hzheader-day {
     text-align: center;
 }
@@ -77,6 +81,7 @@ div.ganttview-vtheader-series-name a:hover i {
 div.ganttview-slide-container {
     overflow: auto;
     border-left: 1px solid #999;
+    cursor: grab;
 }
 
 div.ganttview-grid-row-cell {
