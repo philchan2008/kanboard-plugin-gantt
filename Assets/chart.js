@@ -31,9 +31,9 @@ Gantt.prototype.saveRecord = function(record) {
 // Build the Gantt chart
 Gantt.prototype.show = function() {
     this.data = this.prepareData($(this.options.container).data('records'));
-
-    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth)+5); 
-    var range = this.getDateRange(minDays+60); //FIXME: Added some days here for buffer
+    var zoomscale = !!navigator.userAgent.match(/firefox/i)?window.devicePixelRatio*0.8:(( window.outerWidth-1) / window.innerWidth);
+    var minDays = Math.floor((this.options.slideWidth / (this.options.cellWidth+6)*zoomscale)); 
+    var range = this.getDateRange(minDays); //FIXME: Added some days here for buffer
     var startDate = range[0];
     var endDate = range[1];
     var container = $(this.options.container);
@@ -120,15 +120,19 @@ Gantt.prototype.renderHorizontalHeader = function(dates) {
     var monthsDiv = jQuery("<div>", { "class": "ganttview-hzheader-months" });
     var daysDiv = jQuery("<div>", { "class": "ganttview-hzheader-days" });
     var totalW = 0;
-
+    var zoomscale = !!navigator.userAgent.match(/firefox/i)?window.devicePixelRatio*0.8:(( window.outerWidth-1) / window.innerWidth);
+    console.log("zoomscale:"+zoomscale);
     for (var y in dates) {
         for (var m in dates[y]) {
-            var w = dates[y][m].length * this.options.cellWidth * 1.01; //FIXME: +3 to prevent wrapping in Chrome
+            var w = (dates[y][m].length * ((this.options.cellWidth)) ); //FIXME: +3 to prevent wrapping in Chrome //*(1.0+(1-zoomscale)*0.1/10.0)
+            //var w2 = (dates[y][m].length * ((this.options.cellWidth+6) * zoomscale) ); 
             totalW = totalW + w;
-
+            //console.log(zoomscale);
+            //console.log("w:"+(1+(1-zoomscale)*0.5/10));
             monthsDiv.append(jQuery("<div>", {
-                "class": "ganttview-hzheader-month",
-                "css": { "width": (w - 1) + "px" }
+                "class": "ganttview-hzheader-month", //FIXME: Months width
+                //"css": { "width": (w - 1) + "px" }
+                "css": { "width": (w-3) + "px" } //FIXME: from -1 to -3 not sure which one?
             }).append($.datepicker.regional[$("html").attr('lang')].monthNames[m] + " " + y));
 
             for (var d in dates[y][m]) {
@@ -137,9 +141,12 @@ Gantt.prototype.renderHorizontalHeader = function(dates) {
         }
     }
 
-    monthsDiv.css("width", totalW + "px");
-    daysDiv.css("width", totalW + "px");
+    monthsDiv.css("width", (totalW) + "px"); //*(1+(1-zoomscale))
+    daysDiv.css("width", (totalW)+(zoomscale<=0.51?30: zoomscale<=0.81?10 : 0) + "px"); //*(1+(1-zoomscale*.3)) // 50*(1-zoomscale)
+    
     headerDiv.append(monthsDiv).append(daysDiv);
+
+    //headerDiv.append(daysDiv);
 
     return headerDiv;
 };
@@ -148,7 +155,7 @@ Gantt.prototype.renderHorizontalHeader = function(dates) {
 Gantt.prototype.renderGrid = function(dates) {
     var gridDiv = jQuery("<div>", { "class": "ganttview-grid" });
     var rowDiv = jQuery("<div>", { "class": "ganttview-grid-row" });
-
+    var zoomscale = !!navigator.userAgent.match(/firefox/i)?window.devicePixelRatio*0.8:(( window.outerWidth-1) / window.innerWidth);
     for (var y in dates) {
         for (var m in dates[y]) {
             for (var d in dates[y][m]) {
@@ -159,11 +166,14 @@ Gantt.prototype.renderGrid = function(dates) {
                 if (this.options.showToday && this.isToday(dates[y][m][d])) {
                     cellDiv.addClass("ganttview-today");
                 }
-                rowDiv.append(cellDiv); //DEBUG:
+                rowDiv.append(cellDiv); //grids
+                console.log(cellDiv);
             }
         }
     }
-    var w = jQuery("div.ganttview-grid-row-cell", rowDiv).length * this.options.cellWidth * 1.01; //FIXME: add 7 to revent grid wrapped to next line
+    //var w = jQuery("div.ganttview-grid-row-cell", rowDiv).length * ((this.options.cellWidth+6)*zoomscale ); //FIXME: add 7 to revent grid wrapped to next line
+    //var w = jQuery("div.ganttview-grid-row-cell", rowDiv).length * ((this.options.cellWidth/zoomscale) ); //FIXME: It seems works
+    var w = jQuery("div.ganttview-grid-row-cell", rowDiv).length * ((this.options.cellWidth + (zoomscale<=0.81?10:0) ) ); //FIXME: It seems works
     rowDiv.css("width", w + "px");
     gridDiv.css("width", w + "px");
 
@@ -174,7 +184,7 @@ Gantt.prototype.renderGrid = function(dates) {
     return gridDiv;
 };
 
-// Render bar containers
+// Render bar containers: tasks bars
 Gantt.prototype.addBlockContainers = function() {
     var blocksDiv = jQuery("<div>", { "class": "ganttview-blocks" });
 
@@ -189,23 +199,23 @@ Gantt.prototype.addBlockContainers = function() {
 Gantt.prototype.addBlocks = function(slider, start) {
     var rows = jQuery("div.ganttview-blocks div.ganttview-block-container", slider);
     var rowIdx = 0;
-
+    var zoomscale = !!navigator.userAgent.match(/firefox/i)?window.devicePixelRatio*0.8:(( window.outerWidth-1) / window.innerWidth);
     for (var i = 0; i < this.data.length; i++) {
         var series = this.data[i];
-        var size = this.daysBetween(series.start, series.end) + 1;
-        var offset = this.daysBetween(start, series.start);
+        var size = this.daysBetween(series.start, series.end)+1; //end date inclusive
+        var offset = this.daysBetween(start, series.start)*0.99*(zoomscale<=0.51? 1.04: zoomscale<=0.61? 1.025: zoomscale<=0.71? 1.02: zoomscale<=0.81?1.01: zoomscale<=0.91?1.005: 1);
         var text = jQuery("<div>", {
           "class": "ganttview-block-text",
           "css": {
-              "width": ((size * this.options.cellWidth) - 19) + "px"
+              "width": ((size * (this.options.cellWidth)))+ "px" //-19
           }
         });
 
         var block = jQuery("<div>", {
             "class": "ganttview-block" + (this.options.allowMoves ? " ganttview-block-movable" : ""),
             "css": {
-                "width": ((size * this.options.cellWidth) - 0) + "px",
-                "margin-left": (offset * this.options.cellWidth) + "px"
+                "width": ((size * (this.options.cellWidth))) + "px",  
+                "margin-left": (offset * (this.options.cellWidth)) + "px"  //FIXME: It has not been added (this.options.cellWidth+6)*zoomscale
             }
         }).append(text);
 
@@ -322,9 +332,9 @@ Gantt.prototype.setBarColor = function(block, record) {
 // Setup jquery-ui resizable
 Gantt.prototype.listenForBlockResize = function(startDate) {
     var self = this;
-
+    var zoomscale = !!navigator.userAgent.match(/firefox/i)?window.devicePixelRatio*0.8:(( window.outerWidth-1) / window.innerWidth);
     jQuery("div.ganttview-block", this.options.container).resizable({
-        grid: this.options.cellWidth,
+        grid: (this.options.cellWidth+6)*zoomscale,
         handles: "e,w",
         delay: 300,
         stop: function() {
@@ -338,11 +348,11 @@ Gantt.prototype.listenForBlockResize = function(startDate) {
 // Setup jquery-ui drag and drop
 Gantt.prototype.listenForBlockMove = function(startDate) {
     var self = this;
-
+    var zoomscale = !!navigator.userAgent.match(/firefox/i)?window.devicePixelRatio*0.8:(( window.outerWidth-1) / window.innerWidth);
     jQuery("div.ganttview-block", this.options.container).draggable({
         axis: "x",
         delay: 300,
-        grid: [this.options.cellWidth, this.options.cellWidth],
+        grid: [(this.options.cellWidth+6)*zoomscale, (this.options.cellWidth+6)*zoomscale],
         stop: function() {
             var block = jQuery(this);
             self.updateDataAndPosition(block, startDate);
@@ -355,15 +365,15 @@ Gantt.prototype.listenForBlockMove = function(startDate) {
 Gantt.prototype.updateDataAndPosition = function(block, startDate) {
     var container = jQuery("div.ganttview-slide-container", this.options.container);
     var scroll = container.scrollLeft();
-    var offset = block.offset().left - container.offset().left - 1 + scroll;
+    var offset = block.offset().left - container.offset().left - 0 + scroll;
     var record = block.data("record");
-
+    var zoomscale = !!navigator.userAgent.match(/firefox/i)?window.devicePixelRatio*0.8:(( window.outerWidth-1) / window.innerWidth);
     // Restore color for defined block
     record.not_defined = false;
     this.setBarColor(block, record);
 
     // Set new start date
-    var daysFromStart = Math.round(offset / this.options.cellWidth);
+    var daysFromStart = Math.round(offset*zoomscale / (this.options.cellWidth+6)*zoomscale);
     var newStart = this.addDays(this.cloneDate(startDate), daysFromStart);
     if (!record.date_started_not_defined || this.compareDate(newStart, record.start)) {
         record.start = this.addDays(this.cloneDate(startDate), daysFromStart);
@@ -375,7 +385,7 @@ Gantt.prototype.updateDataAndPosition = function(block, startDate) {
 
     // Set new end date
     var width = block.outerWidth();
-    var numberOfDays = Math.round(width / this.options.cellWidth) - 1;
+    var numberOfDays = Math.round(width*zoomscale / (this.options.cellWidth+6)*zoomscale) - 1;
     var newEnd = this.addDays(this.cloneDate(newStart), numberOfDays);
     if (!record.date_due_not_defined || this.compareDate(newEnd, record.end)) {
         record.end = newEnd;
