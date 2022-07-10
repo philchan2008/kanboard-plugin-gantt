@@ -29,6 +29,13 @@ $(function() {
     var offsetY = 0;
     var offsetTop = 0;
     $("div.ganttview-slide-container")
+    .dblclick(function(e) {
+        isDragging = true;
+        offsetX = e.pageX; 
+        offsetLeft = $("div.ganttview-slide-container").scrollLeft();
+        offsetY = e.pageY;
+        offsetTop = $(document).scrollTop();
+    })
     .mousedown(function(e) {
         isDragging = true;
         offsetX = e.pageX; 
@@ -40,6 +47,7 @@ $(function() {
         if (isDragging) {
             $("div.ganttview-slide-container").scrollLeft(offsetLeft + (e.pageX - offsetX)*-1);
             $(document).scrollTop(offsetTop + (e.pageY - offsetY)*-1);
+            e.preventDefault();
         }
      })
     .mouseup(function(e) {
