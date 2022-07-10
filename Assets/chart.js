@@ -32,8 +32,8 @@ Gantt.prototype.saveRecord = function(record) {
 Gantt.prototype.show = function() {
     this.data = this.prepareData($(this.options.container).data('records'));
 
-    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth) + 5);
-    var range = this.getDateRange(minDays);
+    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth)+5); 
+    var range = this.getDateRange(minDays+60); //FIXME: Added some days here for buffer
     var startDate = range[0];
     var endDate = range[1];
     var container = $(this.options.container);
@@ -57,6 +57,7 @@ Gantt.prototype.show = function() {
     }
 };
 
+
 Gantt.prototype.infoTooltip = function(content) {
     var markdown = $("<div>", {"class": "markdown"}).append(content);
     var script = $("<script>", {"type": "text/template"}).append(markdown);
@@ -71,9 +72,10 @@ Gantt.prototype.renderVerticalHeader = function() {
     var seriesDiv = jQuery("<div>", { "class": "ganttview-vtheader-series" });
 
     for (var i = 0; i < this.data.length; i++) {
-        var content = jQuery("<span>")
-            .append(this.infoTooltip(this.getVerticalHeaderTooltip(this.data[i])))
-            .append("&nbsp;");
+        var content = jQuery("<span>");
+            content.append("&nbsp;")
+                    .append(this.infoTooltip(this.getVerticalHeaderTooltip(this.data[i])))
+                    .append("&nbsp;");
 
         if (this.data[i].type == "task") {
             content.append(jQuery('<strong>').text('#'+this.data[i].id+' '));
@@ -87,14 +89,14 @@ Gantt.prototype.renderVerticalHeader = function() {
                 .append("&nbsp;")
                 .append(jQuery("<a>", {"href": this.data[i].link}).text(this.data[i].title));
         }
-
         seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-series-name"}).append(content));
+        
     }
 
     itemDiv.append(seriesDiv);
     headerDiv.append(itemDiv);
 
-    return headerDiv;
+    return headerDiv.html(); //FIXME: added .html() can solve the display problem in Firefox.
 };
 
 // Render right part of the chart (top header + grid + bars)

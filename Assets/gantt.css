@@ -137,3 +137,7 @@ div.ganttview-progress-bar {
     bottom: 0;
     opacity: 0.4;
 }
+
+.markdown {
+    margin-left: 8px; 
+}
