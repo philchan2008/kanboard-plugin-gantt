@@ -14,7 +14,9 @@ var Gantt = function() {
         cellHeight: 31,
         slideWidth: 1000,
         vHeaderWidth: 200,
-        adjCellWidth: 0.9525  //+ (this.properties.zoomScale<0.81?0.2:0)
+        //FF adjCellWidth: (this.properties.zoomScale <= 0.40 ? 0.906 : this.properties.zoomScale <= 0.48 ? 0.921 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.72 ? 0.948 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.95 ? 0.956 : 0.96) //+ (this.properties.zoomScale<0.81?0.2:0)
+        //CHROME  adjCellWidth: (this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.67 ? 0.93 : this.properties.zoomScale <= 0.75 ? 0.938 : this.properties.zoomScale <= 0.8 ? 0.94 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526) //+ (this.properties.zoomScale<0.81?0.2:0)
+        adjCellWidth: navigator.userAgent.match(/firefox/i)?(this.properties.zoomScale <= 0.40 ? 0.906 : this.properties.zoomScale <= 0.48 ? 0.921 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.72 ? 0.948 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.95 ? 0.956 : 0.96) : (this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.67 ? 0.93 : this.properties.zoomScale <= 0.75 ? 0.938 : this.properties.zoomScale <= 0.8 ? 0.94 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526) 
     };
 };
 
@@ -35,7 +37,7 @@ Gantt.prototype.saveRecord = function(record) {
 Gantt.prototype.show = function() {
     this.data = this.prepareData($(this.options.container).data('records'));
     zoomScale = this.properties.zoomScale;
-    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth)+5); 
+    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth)+90); 
     var range = this.getDateRange(minDays); //FIXME: Added some days here for buffer
     var startDate = range[0];
     var endDate = range[1];
@@ -154,14 +156,14 @@ Gantt.prototype.renderHorizontalHeader = function(dates) {
                 lastMthWidth = w;
                 monthsDiv.append(jQuery("<div>", {
                     "class": "ganttview-hzheader-month",
-                    "css": { "width": "1px" }
-                }).append(""));
+                    "css": { "width": this.options.cellWidth+"px" }
+                }).append("dummy"));
             }
         }
     }
 
     monthsDiv.css("width", totalW + lastMthWidth + "px");
-    daysDiv.css("width", totalW + this.options.cellWidth + "px"); //10/zoomScale
+    daysDiv.css("width", totalW + this.options.cellWidth*1.1 + "px"); //10/zoomScale
     headerDiv.append(monthsDiv).append(daysDiv);
     //headerDiv.append(daysDiv);
 
@@ -231,14 +233,14 @@ Gantt.prototype.addBlocks = function(slider, start) {
         var text = jQuery("<div>", {
           "class": "ganttview-block-text",
           "css": {
-              "width": ((size * this.options.cellWidth)) + "px"
+              "width": ((size * this.options.cellWidth-3)) + "px"
           }
         });
 
         var block = jQuery("<div>", {
             "class": "ganttview-block" + (this.options.allowMoves ? " ganttview-block-movable" : ""),
             "css": {
-                "width": ((size * this.options.cellWidth)) + "px",
+                "width": ((size * this.options.cellWidth-3)) + "px",
                 "margin-left": (offset * this.options.cellWidth ) + "px"
             }
         }).append(text);
