@@ -1,8 +1,10 @@
 // Based on jQuery.ganttView v.0.8.8 Copyright (c) 2010 JC Grubbs - jc.grubbs@devmynd.com - MIT License
 var Gantt = function() {
     this.data = [];
-
-        this.options = {
+    this.properties = {
+        zoomScale: !!navigator.userAgent.match(/firefox/i)?window.devicePixelRatio*0.8:(( window.outerWidth-1) / window.innerWidth)
+    };
+    this.options = {
         container: "#gantt-chart",
         showWeekends: true,
         showToday: true,
@@ -10,9 +12,10 @@ var Gantt = function() {
         allowResizes: true,
         cellWidth: 21,
         cellHeight: 31,
-        slideWidth: 1010,
-        vHeaderWidth: 200
-        };
+        slideWidth: 1000,
+        vHeaderWidth: 200,
+        adjCellWidth: 0.9525  //+ (this.properties.zoomScale<0.81?0.2:0)
+    };
 };
 
 
@@ -31,9 +34,9 @@ Gantt.prototype.saveRecord = function(record) {
 // Build the Gantt chart
 Gantt.prototype.show = function() {
     this.data = this.prepareData($(this.options.container).data('records'));
-
+    zoomScale = this.properties.zoomScale;
     var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth)+5); 
-    var range = this.getDateRange(minDays+60); //FIXME: Added some days here for buffer
+    var range = this.getDateRange(minDays); //FIXME: Added some days here for buffer
     var startDate = range[0];
     var endDate = range[1];
     var container = $(this.options.container);
@@ -69,7 +72,7 @@ Gantt.prototype.renderVerticalHeader = function() {
     var headerDiv = jQuery("<div>", { "class": "ganttview-vtheader" });
     var itemDiv = jQuery("<div>", { "class": "ganttview-vtheader-item" });
     var seriesDiv = jQuery("<div>", { "class": "ganttview-vtheader-series" });
-
+    var zoomScale = this.properties.zoomScale;
     for (var i = 0; i < this.data.length; i++) {
         var content = jQuery("<span>");
             content.append("&nbsp;")
@@ -89,7 +92,7 @@ Gantt.prototype.renderVerticalHeader = function() {
                 .append(jQuery("<a>", {"href": this.data[i].link}).text(this.data[i].title));
         }
         if ( i ==0 ) {
-            seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(''));
+            seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(zoomScale<0.95||zoomScale>1.10?'Warning: 100% zoom scale is required, currently it is '+Math.round(zoomScale*100)+'%':''));
         }
         seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-series-name"}).append(content));
         
@@ -120,52 +123,83 @@ Gantt.prototype.renderHorizontalHeader = function(dates) {
     var monthsDiv = jQuery("<div>", { "class": "ganttview-hzheader-months" });
     var daysDiv = jQuery("<div>", { "class": "ganttview-hzheader-days" });
     var totalW = 0;
-
+    var lastMthWidth = 0;
+    var zoomScale = this.properties.zoomScale;
     for (var y in dates) {
         for (var m in dates[y]) {
-            var w = dates[y][m].length * this.options.cellWidth * 1.01; //FIXME: +3 to prevent wrapping in Chrome
+            var w = dates[y][m].length * this.options.cellWidth; //FIXME: +3 to prevent wrapping in Chrome
             totalW = totalW + w;
-
+            console.log('cellWidth:' + this.options.cellWidth);
             monthsDiv.append(jQuery("<div>", {
                 "class": "ganttview-hzheader-month",
-                "css": { "width": (w - 1) + "px" }
+                "css": { "width": (w-1) + "px"}
             }).append($.datepicker.regional[$("html").attr('lang')].monthNames[m] + " " + y));
-
+            
             for (var d in dates[y][m]) {
-                daysDiv.append(jQuery("<div>", { "class": "ganttview-hzheader-day" }).append(dates[y][m][d].getDate()));
+                //console.log(y + ";" + m + ";" + dates.length + ";" + dates[dates.length - 1][dates[dates.length - 1].length - 1]);
+                if (y == dates.length - 1 && m == dates[dates.length - 1].length - 1 && d == dates[dates.length - 1][dates[dates.length - 1].length - 1].length - 1) {
+                    //Prevent overflow by not printing the last date
+                } else {
+                    daysDiv.append(jQuery("<div>", {
+                        "class": "ganttview-hzheader-day",
+                        "css": {
+                            "width": this.options.cellWidth * this.options.adjCellWidth + "px"
+                        } //FIXME: cellWidth*0.95
+                    }).append(dates[y][m][d].getDate()));
+                }
+            }
+
+            //FIXME: By adding a dummy cell in month header to prevent day bar comes to months
+            if (y == dates.length - 1 && m == dates[dates.length - 1].length - 1) { //last month
+                lastMthWidth = w;
+                monthsDiv.append(jQuery("<div>", {
+                    "class": "ganttview-hzheader-month",
+                    "css": { "width": "1px" }
+                }).append(""));
             }
         }
     }
 
-    monthsDiv.css("width", totalW + "px");
-    daysDiv.css("width", totalW + "px");
+    monthsDiv.css("width", totalW + lastMthWidth + "px");
+    daysDiv.css("width", totalW + this.options.cellWidth + "px"); //10/zoomScale
     headerDiv.append(monthsDiv).append(daysDiv);
+    //headerDiv.append(daysDiv);
 
     return headerDiv;
 };
 
-// Render grid
+// Render grid - focused on resizing the grid
 Gantt.prototype.renderGrid = function(dates) {
     var gridDiv = jQuery("<div>", { "class": "ganttview-grid" });
     var rowDiv = jQuery("<div>", { "class": "ganttview-grid-row" });
-
+    var zoomScale = this.properties.zoomScale;
     for (var y in dates) {
         for (var m in dates[y]) {
             for (var d in dates[y][m]) {
-                var cellDiv = jQuery("<div>", { "class": "ganttview-grid-row-cell" });
-                if (this.options.showWeekends && this.isWeekend(dates[y][m][d])) {
-                    cellDiv.addClass("ganttview-weekend");
+                if (y == dates.length - 1 && m == dates[dates.length - 1].length - 1 && d == dates[dates.length - 1][dates[dates.length - 1].length - 1].length - 1) {
+                    //Prevent overflow by not printing the last date
+                } else {
+                    var cellDiv = jQuery("<div>", {
+                        "class": "ganttview-grid-row-cell",
+                        "css": {
+                            "width": this.options.cellWidth * this.options.adjCellWidth + "px",
+                            "height": this.options.cellHeight - 0.15 + "px"
+                        } //FIXME: cellWidth*0.95
+                    });
+                    if (this.options.showWeekends && this.isWeekend(dates[y][m][d])) {
+                        cellDiv.addClass("ganttview-weekend");
+                    }
+                    if (this.options.showToday && this.isToday(dates[y][m][d])) {
+                        cellDiv.addClass("ganttview-today");
+                    }
+                    rowDiv.append(cellDiv); //DEBUG:
                 }
-                if (this.options.showToday && this.isToday(dates[y][m][d])) {
-                    cellDiv.addClass("ganttview-today");
-                }
-                rowDiv.append(cellDiv); //DEBUG:
             }
         }
     }
-    var w = jQuery("div.ganttview-grid-row-cell", rowDiv).length * this.options.cellWidth * 1.01; //FIXME: add 7 to revent grid wrapped to next line
-    rowDiv.css("width", w + "px");
-    gridDiv.css("width", w + "px");
+    var w = jQuery("div.ganttview-grid-row-cell", rowDiv).length * this.options.cellWidth * 1.01; // * (zoomScale<=0.85?1.011:1.01); //FIXME: add 7 to revent grid wrapped to next line
+    rowDiv.css("width", w + this.options.cellWidth-1 + "px");
+    gridDiv.css("width", w + this.options.cellWidth-1 + "px");
 
     for (var i = 0; i < this.data.length; i++) {
         gridDiv.append(rowDiv.clone());
@@ -185,11 +219,11 @@ Gantt.prototype.addBlockContainers = function() {
     return blocksDiv;
 };
 
-// Render bars
+// Render bars //This bar can't resize width by zoomscale
 Gantt.prototype.addBlocks = function(slider, start) {
     var rows = jQuery("div.ganttview-blocks div.ganttview-block-container", slider);
     var rowIdx = 0;
-
+    var zoomScale = this.properties.zoomScale;
     for (var i = 0; i < this.data.length; i++) {
         var series = this.data[i];
         var size = this.daysBetween(series.start, series.end) + 1;
@@ -197,15 +231,15 @@ Gantt.prototype.addBlocks = function(slider, start) {
         var text = jQuery("<div>", {
           "class": "ganttview-block-text",
           "css": {
-              "width": ((size * this.options.cellWidth) - 19) + "px"
+              "width": ((size * this.options.cellWidth)) + "px"
           }
         });
 
         var block = jQuery("<div>", {
             "class": "ganttview-block" + (this.options.allowMoves ? " ganttview-block-movable" : ""),
             "css": {
-                "width": ((size * this.options.cellWidth) - 0) + "px",
-                "margin-left": (offset * this.options.cellWidth) + "px"
+                "width": ((size * this.options.cellWidth)) + "px",
+                "margin-left": (offset * this.options.cellWidth ) + "px"
             }
         }).append(text);
 
