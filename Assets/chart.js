@@ -2,7 +2,7 @@
 var Gantt = function() {
     this.data = [];
     this.properties = {
-        zoomScale: !!navigator.userAgent.match(/firefox/i)?window.devicePixelRatio*0.8:(( window.outerWidth-1) / window.innerWidth)
+        zoomScale: !!navigator.userAgent.match(/firefox/i)?window.devicePixelRatio*0.8:(( window.outerWidth-1) / window.innerWidth)        
     };
     this.options = {
         container: "#gantt-chart",
@@ -14,9 +14,10 @@ var Gantt = function() {
         cellHeight: 31,
         slideWidth: 1000,
         vHeaderWidth: 200,
-        //FF adjCellWidth: (this.properties.zoomScale <= 0.40 ? 0.906 : this.properties.zoomScale <= 0.48 ? 0.921 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.72 ? 0.948 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.95 ? 0.956 : 0.96) //+ (this.properties.zoomScale<0.81?0.2:0)
-        //CHROME  adjCellWidth: (this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.67 ? 0.93 : this.properties.zoomScale <= 0.75 ? 0.938 : this.properties.zoomScale <= 0.8 ? 0.94 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526) //+ (this.properties.zoomScale<0.81?0.2:0)
-        adjCellWidth: navigator.userAgent.match(/firefox/i)?(this.properties.zoomScale <= 0.40 ? 0.906 : this.properties.zoomScale <= 0.48 ? 0.921 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.72 ? 0.948 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.95 ? 0.956 : 0.96) : (this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.67 ? 0.93 : this.properties.zoomScale <= 0.75 ? 0.938 : this.properties.zoomScale <= 0.8 ? 0.94 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526) 
+        calendarBufferDays: 180,
+        //_adjCellWidthFF: (this.properties.zoomScale <= 0.40 ? 0.906 : this.properties.zoomScale <= 0.48 ? 0.921 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.72 ? 0.948 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.95 ? 0.956 : 0.96),
+        //_adjCellWidthChrome: (this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.67 ? 0.93 : this.properties.zoomScale <= 0.75 ? 0.938 : this.properties.zoomScale <= 0.8 ? 0.94 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526),
+        zoomFactor: navigator.userAgent.match(/firefox/i)?(this.properties.zoomScale <= 0.40 ? 0.906 : this.properties.zoomScale <= 0.50 ? 0.925 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.601 ? 0.9375 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.70 ? 0.9455 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.911 ? 0.9585 : this.properties.zoomScale <= 0.95 ? 0.956 : 0.962) : (this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.67 ? 0.93 : this.properties.zoomScale <= 0.75 ? 0.938 : this.properties.zoomScale <= 0.8 ? 0.94 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526) 
     };
 };
 
@@ -37,7 +38,7 @@ Gantt.prototype.saveRecord = function(record) {
 Gantt.prototype.show = function() {
     this.data = this.prepareData($(this.options.container).data('records'));
     zoomScale = this.properties.zoomScale;
-    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth)+90); 
+    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth) +this.options.calendarBufferDays); 
     var range = this.getDateRange(minDays); //FIXME: Added some days here for buffer
     var startDate = range[0];
     var endDate = range[1];
@@ -139,16 +140,16 @@ Gantt.prototype.renderHorizontalHeader = function(dates) {
             
             for (var d in dates[y][m]) {
                 //console.log(y + ";" + m + ";" + dates.length + ";" + dates[dates.length - 1][dates[dates.length - 1].length - 1]);
-                if (y == dates.length - 1 && m == dates[dates.length - 1].length - 1 && d == dates[dates.length - 1][dates[dates.length - 1].length - 1].length - 1) {
-                    //Prevent overflow by not printing the last date
-                } else {
+                // if (y == dates.length - 1 && m == dates[dates.length - 1].length - 1 && d == dates[dates.length - 1][dates[dates.length - 1].length - 1].length - 1) {
+                //     //Prevent overflow by not printing the last date
+                // } else {
                     daysDiv.append(jQuery("<div>", {
                         "class": "ganttview-hzheader-day",
                         "css": {
-                            "width": this.options.cellWidth * this.options.adjCellWidth + "px"
+                            "width": this.options.cellWidth * this.options.zoomFactor + "px"
                         } //FIXME: cellWidth*0.95
                     }).append(dates[y][m][d].getDate()));
-                }
+                //}
             }
 
             //FIXME: By adding a dummy cell in month header to prevent day bar comes to months
@@ -157,7 +158,7 @@ Gantt.prototype.renderHorizontalHeader = function(dates) {
                 monthsDiv.append(jQuery("<div>", {
                     "class": "ganttview-hzheader-month",
                     "css": { "width": this.options.cellWidth+"px" }
-                }).append("dummy"));
+                }).append("X"));
             }
         }
     }
@@ -184,7 +185,7 @@ Gantt.prototype.renderGrid = function(dates) {
                     var cellDiv = jQuery("<div>", {
                         "class": "ganttview-grid-row-cell",
                         "css": {
-                            "width": this.options.cellWidth * this.options.adjCellWidth + "px",
+                            "width": this.options.cellWidth * this.options.zoomFactor + "px",
                             "height": this.options.cellHeight - 0.15 + "px"
                         } //FIXME: cellWidth*0.95
                     });
