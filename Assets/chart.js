@@ -14,13 +14,18 @@ var Gantt = function() {
         cellHeight: 31,
         slideWidth: 1000,
         vHeaderWidth: 200,
-        calendarBufferDays: 180,
+        calendarBufferDays: 360,
         //_adjCellWidthFF: (this.properties.zoomScale <= 0.40 ? 0.906 : this.properties.zoomScale <= 0.48 ? 0.921 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.72 ? 0.948 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.95 ? 0.956 : 0.96),
         //_adjCellWidthChrome: (this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.67 ? 0.93 : this.properties.zoomScale <= 0.75 ? 0.938 : this.properties.zoomScale <= 0.8 ? 0.94 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526),
-        zoomFactorW: navigator.userAgent.match(/firefox/i)?(this.properties.zoomScale <= 0.40 ? 0.906 : this.properties.zoomScale <= 0.50 ? 0.925 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.601 ? 0.9375 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.70 ? 0.9455 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.911 ? 0.9585 : this.properties.zoomScale <= 0.95 ? 0.956 : 0.962) : (this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.671 ? 0.943 : this.properties.zoomScale <= 0.751 ? 0.9495 : this.properties.zoomScale <= 0.81 ? 0.9525 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526),
-        zoomFactorH: navigator.userAgent.match(/firefox/i)?(this.properties.zoomScale <= 0.601 ? 0.989 : this.properties.zoomScale <= 0.601 ? 0.989 : this.properties.zoomScale <= 0.70 ? 0.995 : this.properties.zoomScale <= 0.80 ? 1.0002 : this.properties.zoomScale <= 0.911 ? 1.004 :  1.0065):(this.properties.zoomScale <= 0.671 ? 0.9935 : this.properties.zoomScale <= 0.751 ? 0.998 : 1)
+        zoomFactorW: navigator.userAgent.match(/firefox/i)?(this.properties.zoomScale <= 0.40 ? 0.906 : this.properties.zoomScale <= 0.50 ? 0.925 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.601 ? 0.9375 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.70 ? 0.9455 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.911 ? 0.9585 : this.properties.zoomScale <= 0.95 ? 0.956 : this.properties.zoomScale >= 2.179 ? 0.965 : 0.962) : ( this.properties.zoomScale <= 0.51 ? 0.924 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.671 ? 0.943 : this.properties.zoomScale <= 0.751 ? 0.9495 : this.properties.zoomScale <= 0.81 ? 0.9525 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526),
+        zoomFactorH: navigator.userAgent.match(/firefox/i)?(this.properties.zoomScale <= 0.601 ? 0.989 : this.properties.zoomScale <= 0.601 ? 0.989 : this.properties.zoomScale <= 0.70 ? 0.995 : this.properties.zoomScale <= 0.80 ? 1.0002 : this.properties.zoomScale <= 0.911 ? 1.004 : this.properties.zoomScale >= 2.179 ? 1.0085 : 1.0065):(this.properties.zoomScale <= 0.51 ? 0.981 : this.properties.zoomScale <= 0.671 ? 0.9935 : this.properties.zoomScale <= 0.751 ? 0.998 : 1)
     };
+    console.log('zoomScale:'+this.properties.zoomScale);
+    console.log('zoomFactorW:'+this.options.zoomFactorW);
+    console.log('zoomFactorH:'+this.options.zoomFactorH);
 };
+
+//FIXME: W: 0.4~0.906 to 0.9~0.947 ; H: 0.9~0.947 to 0.751~0.998
 
 
 // Save record after a resize or move
@@ -96,13 +101,12 @@ Gantt.prototype.renderVerticalHeader = function() {
                 .append(jQuery("<a>", {"href": this.data[i].link}).text(this.data[i].title));
         }
         if ( i ==0 ) {
-            seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(zoomScale<0.95||zoomScale>1.10?'Warning: '+Math.round(zoomScale*100)+'% may not work well!':''));
+            seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(zoomScale<0.95||zoomScale>1.10?'Warning: Zoom '+Math.round(zoomScale*100.0)+'% may not work well!':''));
         }
         seriesDiv.append(jQuery("<div>", {
             "class": "ganttview-vtheader-series-name",
             "css": { "height": this.options.cellHeight * this.options.zoomFactorH + "px" }
         }).append(content));
-        
     }
 
     itemDiv.append(seriesDiv);
@@ -188,7 +192,8 @@ Gantt.prototype.renderGrid = function(dates) {
                     var cellDiv = jQuery("<div>", {
                         "class": "ganttview-grid-row-cell",
                         "css": {
-                            "width": this.options.cellWidth * this.options.zoomFactorW + "px",
+                            //"width": this.options.cellWidth * this.options.zoomFactorW + "px",
+                            "width": this.options.cellWidth *this.options.zoomFactorW + "px",
                             "height": this.options.cellHeight * this.options.zoomFactorH + "px"
                         } //FIXME: cellWidth*0.95
                     });
