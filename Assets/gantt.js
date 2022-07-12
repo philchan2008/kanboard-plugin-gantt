@@ -22,6 +22,7 @@ KB.on('dom.ready', function () {
 
 });
 
+//handle drag-n-drop scrolling
 $(function() {
     var isDragging = false;
     var offsetX = 0;

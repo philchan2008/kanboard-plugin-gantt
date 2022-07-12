@@ -85,6 +85,7 @@ div.ganttview-slide-container {
     overflow: auto;
     border-left: 1px solid #999;
     cursor: grab;
+    scrollbar-width: thin;
 }
 
 div.ganttview-grid-row-cell {
