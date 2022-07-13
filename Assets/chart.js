@@ -12,7 +12,7 @@ var Gantt = function() {
         allowResizes: true,
         cellWidth: 21,
         cellHeight: 31,
-        slideWidth: 1000,
+        slideWidth: 10000,
         vHeaderWidth: 200,
         calendarBufferDays: 180,
     };
@@ -20,11 +20,11 @@ var Gantt = function() {
         //_adjCellWidthFF: (this.properties.zoomScale <= 0.40 ? 0.906 : this.properties.zoomScale <= 0.48 ? 0.921 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.72 ? 0.948 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.95 ? 0.956 : 0.96),
         //_adjCellWidthChrome: (this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.67 ? 0.93 : this.properties.zoomScale <= 0.75 ? 0.938 : this.properties.zoomScale <= 0.8 ? 0.94 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526),
         //Grid Cell Width 
-        zoomFactorW: navigator.userAgent.match(/firefox/i) ? (this.properties.zoomScale <= 0.321 ? 0.88 : this.properties.zoomScale <= 0.401 ? 0.908 : this.properties.zoomScale <= 0.481 ? 0.922: this.properties.zoomScale <= 0.50 ? 0.925 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.601 ? 0.9375 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.72 ? 0.9455 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.911 ? 0.9585 : this.properties.zoomScale <= 0.95 ? 0.956 : this.properties.zoomScale >= 2.18 ? 0.965: this.properties.zoomScale >= 1.77 ? 0.958 : this.properties.zoomScale >= 1.65 ? 0.955 : this.properties.zoomScale >= 1.59 ? 0.954 : this.properties.zoomScale >= 1.49 ? 0.975 : this.properties.zoomScale >= 1.45 ? 0.973 : this.properties.zoomScale >= 1.37 ? 0.9725 : this.properties.zoomScale >= 1.26 ? 0.97 : this.properties.zoomScale >= 1.2 ? 0.97 : this.properties.zoomScale >= 1.11 ? 0.965 :0.962) : (this.properties.zoomScale <= 0.4 ? 0.952 : this.properties.zoomScale <= 0.5 ? 0.905 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.671 ? 0.929 : this.properties.zoomScale <= 0.751 ? 0.94 : this.properties.zoomScale <= 0.81 ? 0.94 : this.properties.zoomScale <= 0.86 ? 0.9525 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526),
+        zoomFactorW: navigator.userAgent.match(/firefox/i) ? (this.properties.zoomScale <= 0.321 ? 0.88 : this.properties.zoomScale <= 0.401 ? 0.908 : this.properties.zoomScale <= 0.481 ? 0.922: this.properties.zoomScale <= 0.50 ? 0.925 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.601 ? 0.9375 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.72 ? 0.947 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.911 ? 0.9585 : this.properties.zoomScale <= 0.95 ? 0.956 : this.properties.zoomScale >= 2.18 ? 0.965: this.properties.zoomScale >= 1.77 ? 0.958 : this.properties.zoomScale >= 1.65 ? 0.955 : this.properties.zoomScale >= 1.59 ? 0.954 : this.properties.zoomScale >= 1.49 ? 0.975 : this.properties.zoomScale >= 1.45 ? 0.973 : this.properties.zoomScale >= 1.37 ? 0.9725 : this.properties.zoomScale >= 1.26 ? 0.97 : this.properties.zoomScale >= 1.2 ? 0.97 : this.properties.zoomScale >= 1.11 ? 0.965 :0.962) : (this.properties.zoomScale <= 0.4 ? 0.952 : this.properties.zoomScale <= 0.5 ? 0.905 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.671 ? 0.929 : this.properties.zoomScale <= 0.751 ? 0.937 : this.properties.zoomScale <= 0.81 ? 0.94 : this.properties.zoomScale <= 0.86 ? 0.9525 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526),
         //Grid Cell Height
         zoomFactorH: navigator.userAgent.match(/firefox/i) ? (this.properties.zoomScale <= 0.321 ? 0.952: this.properties.zoomScale <= 0.48 ? 0.978: this.properties.zoomScale <= 0.56 ? 0.985 : this.properties.zoomScale <= 0.601 ? 0.989 : this.properties.zoomScale <= 0.641 ? 0.993 : this.properties.zoomScale <= 0.72 ? 0.995 : this.properties.zoomScale <= 0.80 ? 1.0002 : this.properties.zoomScale <= 0.911 ? 1.004 : this.properties.zoomScale >= 2.18 ? 1.01 : this.properties.zoomScale >= 1.77 ? 1.002 : this.properties.zoomScale >= 1.65 ? 1.0015 : this.properties.zoomScale >= 1.59 ? 1.00 : this.properties.zoomScale >= 1.49 ? 1.015 :  this.properties.zoomScale >= 1.45 ? 1.015 : this.properties.zoomScale >= 1.37 ? 1.0125 : this.properties.zoomScale >= 1.26 ? 1.012 : this.properties.zoomScale >= 1.2 ? 1.012 : this.properties.zoomScale >= 1.11 ? 1.01 :1.0065) : (this.properties.zoomScale <= 0.40 ? 1 : this.properties.zoomScale <= 0.50 ? 0.968 : this.properties.zoomScale <= 0.671 ? 0.983 : this.properties.zoomScale <= 0.751 ? 0.99 : this.properties.zoomScale <= 0.81 ? 0.99: 1),
         //Month Header Width
-        zoomFactorMonthW: navigator.userAgent.match(/firefox/i) ? (this.properties.zoomScale <= 0.321 ? 0.997 : this.properties.zoomScale <= 0.4 ? 0.9999 : this.properties.zoomScale <= 0.49 ? 1.0002 : this.properties.zoomScale <= 0.57 ? 0.99945 : this.properties.zoomScale <= 0.65 ? 1.0004 : this.properties.zoomScale <= 0.72 ? 1.00525 : this.properties.zoomScale <= 0.8 ? 1.00 : this.properties.zoomScale <= 0.88 ? 1.0025 : this.properties.zoomScale <= 1.01 ? 1.0019 : this.properties.zoomScale >= 2.18 ? 1.0004 : this.properties.zoomScale >= 1.65 ? 1.008 : this.properties.zoomScale >= 1.59 ? 1.0015 : this.properties.zoomScale >= 1.49 ? 1.0018 : this.properties.zoomScale >= 1.37 ? 1.001 : this.properties.zoomScale >= 1.26 ? 1.0007 : this.properties.zoomScale >= 1.2 ? 1.0022 : this.properties.zoomScale >= 1.11? 0.9998 : 0.999) :  ( this.properties.zoomScale <= 0.40 ? 1 : this.properties.zoomScale <= 0.50 ? 0.9985 : this.properties.zoomScale <= 0.67 ? 1.005 : this.properties.zoomScale <= 0.751 ? 1.0025 : this.properties.zoomScale <= 0.81 ? 0.9985 : this.properties.zoomScale >= 1.11? 0.9998 : 0.999)
+        zoomFactorMonthW: navigator.userAgent.match(/firefox/i) ? (this.properties.zoomScale <= 0.321 ? 0.997 : this.properties.zoomScale <= 0.4 ? 0.9999 : this.properties.zoomScale <= 0.49 ? 1.0002 : this.properties.zoomScale <= 0.57 ? 0.99945 : this.properties.zoomScale <= 0.65 ? 1.0004 : this.properties.zoomScale <= 0.72 ? 1.00525 : this.properties.zoomScale <= 0.8 ? 1.00 : this.properties.zoomScale <= 0.88 ? 1.0025 : this.properties.zoomScale <= 1.01 ? 1.0019 : this.properties.zoomScale >= 2.18 ? 1.0004 : this.properties.zoomScale >= 1.65 ? 1.008 : this.properties.zoomScale >= 1.59 ? 1.0015 : this.properties.zoomScale >= 1.49 ? 1.0018 : this.properties.zoomScale >= 1.37 ? 1.001 : this.properties.zoomScale >= 1.26 ? 1.0007 : this.properties.zoomScale >= 1.2 ? 1.0022 : this.properties.zoomScale >= 1.11? 0.9998 : 0.999) :  ( this.properties.zoomScale <= 0.40 ? 1 : this.properties.zoomScale <= 0.50 ? 0.9985 : this.properties.zoomScale <= 0.67 ? 1.005 : this.properties.zoomScale <= 0.751 ? 0.9995 : this.properties.zoomScale <= 0.81 ? 0.9985 : this.properties.zoomScale <= 0.91 ? 0.9993 : this.properties.zoomScale >= 1.25 ? 1 : 1)
     };
 };
 
@@ -45,7 +45,7 @@ Gantt.prototype.saveRecord = function(record) {
 Gantt.prototype.show = function() {
     this.data = this.prepareData($(this.options.container).data('records'));
     zoomScale = this.properties.zoomScale;
-    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth) +this.options.calendarBufferDays); 
+    var minDays = Math.floor((this.options.slideWidth / this.options.cellWidth) + this.options.calendarBufferDays);
     var range = this.getDateRange(minDays); //FIXME: Added some days here for buffer
     var startDate = range[0];
     var endDate = range[1];
@@ -102,7 +102,7 @@ Gantt.prototype.renderVerticalHeader = function() {
                 .append(jQuery("<a>", {"href": this.data[i].link}).text(this.data[i].title));
         }
         if ( i ==0 ) {
-            seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(zoomScale<0.95||zoomScale>1.10?'Warning: '+Math.round(zoomScale*100)+'% may not work well!':''));
+            seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(zoomScale<0.95||zoomScale>1.10?'Zoom level is '+Math.round(zoomScale*100)+'%':''));
         }
         seriesDiv.append(jQuery("<div>", {
             "class": "ganttview-vtheader-series-name",
@@ -141,7 +141,6 @@ Gantt.prototype.renderHorizontalHeader = function(dates) {
         for (var m in dates[y]) {
             var w = dates[y][m].length * this.options.cellWidth; //FIXME: +3 to prevent wrapping in Chrome
             totalW = totalW + w;
-            console.log('cellWidth:' + this.options.cellWidth);
             monthsDiv.append(jQuery("<div>", {
                 "class": "ganttview-hzheader-month",
                 "css": { "width": (w-1) * this.sysopts.zoomFactorMonthW + "px"}
