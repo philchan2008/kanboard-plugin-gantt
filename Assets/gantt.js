@@ -66,7 +66,8 @@ KB.on('dom.ready', function () {
     $('#zoomFactorW')
         .change( function(e) {
             var zoomFactorW;
-            zoomFactorW = $('#zoomFactorW').val()*0.001;   
+            zoomFactorW = $('#zoomFactorW').val()*0.001;  
+            console.log("zoomFactorW: "+zoomFactorW); 
             $(".ganttview-grid-row-cell").css("width", chart.options.cellWidth * zoomFactorW +"px");
             $(".ganttview-hzheader-day").css("width", chart.options.cellWidth * zoomFactorW +"px");
             //$(".ganttview-hzheader-month").css("width", chart.options.cellWidth / chart.options.zoomFactorMonthW * zoomFactorW +"px");
@@ -77,7 +78,8 @@ KB.on('dom.ready', function () {
     $('#zoomFactorH')
         .change( function(e) {
             var zoomFactorH;
-            zoomFactorH = $('#zoomFactorH').val()*0.001;   
+            zoomFactorH = $('#zoomFactorH').val()*0.001; 
+            console.log("zoomFactorH: "+zoomFactorH);
             $(".ganttview-grid-row-cell").css("height", chart.options.cellHeight * zoomFactorH +"px");
         });
     // $('#zoomFactorMonthW')
