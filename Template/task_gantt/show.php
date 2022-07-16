@@ -17,7 +17,10 @@
             <li>
                 <?= $this->modal->large('plus', t('Add task'), 'TaskCreationController', 'show', array('project_id' => $project['id'])) ?>
             </li>
-        </ul>
+            <li>
+                <!-- <input type="range" id="zoomFactorMonthW" name="zoomFactorMonthW"  min="850" max="1050" /> --->
+            </li>
+        </ul>        
     </div>
 
     <?php if (! empty($tasks)): ?>
@@ -30,7 +33,23 @@
             data-label-assignee="<?= t('Assignee:') ?>"
             data-label-not-defined="<?= t('There is no start date or due date for this task.') ?>"
         ></div>
-        <p class="alert alert-info"><?= t('Moving or resizing a task will change the start and due date of the task.') ?></p>
+        <p class="alert alert-info">
+        <span>
+            <?= t('Moving or resizing a task will change the start and due date of the task.') ?>
+        </span>
+        <span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+        <span>
+            <i class="fa fa-arrows-h" >
+            <input type="range" id="zoomFactorW" name="zoomFactorW"  min="850" max="1050"/>
+            </i>
+            <i class="fa fa-arrows-v" >
+            <input type="range" id="zoomFactorH" name="zoomFactorH"  min="750" max="1250" />
+            </i>
+        </span>     
+        </p>
+        
     <?php else: ?>
         <p class="alert"><?= t('There is no task in your project.') ?></p>
     <?php endif ?>

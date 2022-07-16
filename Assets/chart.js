@@ -17,8 +17,6 @@ var Gantt = function() {
         calendarBufferDays: 180,
     };
     this.sysopts = {
-        //_adjCellWidthFF: (this.properties.zoomScale <= 0.40 ? 0.906 : this.properties.zoomScale <= 0.48 ? 0.921 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.72 ? 0.948 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.95 ? 0.956 : 0.96),
-        //_adjCellWidthChrome: (this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.67 ? 0.93 : this.properties.zoomScale <= 0.75 ? 0.938 : this.properties.zoomScale <= 0.8 ? 0.94 : this.properties.zoomScale <= 0.9 ? 0.947 : 0.9526),
         //Grid Cell Width 
         zoomFactorW: navigator.userAgent.match(/firefox/i) ? (this.properties.zoomScale <= 0.321 ? 0.88 : this.properties.zoomScale <= 0.401 ? 0.908 : this.properties.zoomScale <= 0.481 ? 0.922: this.properties.zoomScale <= 0.50 ? 0.925 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.601 ? 0.9375 : this.properties.zoomScale <= 0.65 ? 0.9415 : this.properties.zoomScale <= 0.671 ? 0.943 : this.properties.zoomScale <= 0.72 ? 0.947 : this.properties.zoomScale <= 0.8 ? 0.952 : this.properties.zoomScale <= 0.911 ? 0.9580 : this.properties.zoomScale <= 0.95 ? 0.956 : this.properties.zoomScale >= 2.18 ? 0.965: this.properties.zoomScale >= 1.77 ? 0.958 : this.properties.zoomScale >= 1.65 ? 0.955 : this.properties.zoomScale >= 1.59 ? 0.954 : this.properties.zoomScale >= 1.49 ? 0.975 : this.properties.zoomScale >= 1.45 ? 0.973 : this.properties.zoomScale >= 1.37 ? 0.9725 : this.properties.zoomScale >= 1.26 ? 0.97 : this.properties.zoomScale >= 1.2 ? 0.97 : this.properties.zoomScale >= 1.11 ? 0.965 :0.962) : (this.properties.zoomScale <= 0.4 ? 0.952 : this.properties.zoomScale <= 0.5 ? 0.905 : this.properties.zoomScale <= 0.56 ? 0.9315 : this.properties.zoomScale <= 0.671 ? 0.929 : this.properties.zoomScale <= 0.751 ? 0.937 : this.properties.zoomScale <= 0.81 ? 0.94121 : this.properties.zoomScale <= 0.86 ? 0.9525 : this.properties.zoomScale <= 0.91 ? 0.9475 : 0.9526),
         //Grid Cell Height
@@ -29,7 +27,6 @@ var Gantt = function() {
         debugHideMonthHeader: false //enable it to hide month header for debugging purpose, check today's aligns to task's today?
     };
 };
-
 
 // Save record after a resize or move
 Gantt.prototype.saveRecord = function(record) {
@@ -578,7 +575,7 @@ Gantt.prototype.compareDate = function(date1, date2) {
     } else if (date1 instanceof Date && date2 instanceof Date) {
         return (date1 < date2) ? -1 : (date1 > date2) ? 1 : 0;
     } else {
-        throw new TypeError(date1 + " - " + date2);
+       throw new TypeError(date1 + " - " + date2);
     }
 };
 

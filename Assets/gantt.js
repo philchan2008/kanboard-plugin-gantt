@@ -1,4 +1,8 @@
+
 KB.on('dom.ready', function () {
+
+    var chart; //chart instance
+
     function goToLink (selector) {
         if (! KB.modal.isOpen()) {
             var element = KB.find(selector);
@@ -14,48 +18,75 @@ KB.on('dom.ready', function () {
     });
 
     if (KB.exists('#gantt-chart')) {
-        var chart = new Gantt();
-        chart.show();
+        chart = new Gantt();
+        
+        $("#zoomFactorW").val(chart.sysopts.zoomFactorW*1000);
+        $("#zoomFactorH").val(chart.sysopts.zoomFactorH*1000);
+        $("#zoomFactorMonthW").val(chart.sysopts.zoomFactorMonthW*1000);
 
+        chart.show();
         //KB.tooltip();
     }
 
-});
-
-//handle drag-n-drop scrolling
-$(function() {
     var isDragging = false;
     var offsetX = 0;
     var offsetLeft = 0;
     var offsetY = 0;
     var offsetTop = 0;
     $("div.ganttview-slide-container")
-    .dblclick(function(e) {
-        isDragging = true;
-        offsetX = e.pageX; 
-        offsetLeft = $("div.ganttview-slide-container").scrollLeft();
-        offsetY = e.pageY;
-        offsetTop = $(document).scrollTop();
-    })
-    .mousedown(function(e) {
-        isDragging = true;
-        offsetX = e.pageX; 
-        offsetLeft = $("div.ganttview-slide-container").scrollLeft();
-        offsetY = e.pageY;
-        offsetTop = $(document).scrollTop();
-    })
-    .mousemove(function(e) {
-        if (isDragging) {
-            $("div.ganttview-slide-container").scrollLeft(offsetLeft + (e.pageX - offsetX)*-1);
-            $(document).scrollTop(offsetTop + (e.pageY - offsetY)*-1);
-            e.preventDefault();
-        }
-     })
-    .mouseup(function(e) {
-        var wasDragging = isDragging;
-        isDragging = false;
-    });
+        .dblclick(function(e) {
+            isDragging = true;
+            offsetX = e.pageX; 
+            offsetLeft = $("div.ganttview-slide-container").scrollLeft();
+            offsetY = e.pageY;
+            offsetTop = $(document).scrollTop();
+        })
+        .mousedown(function(e) {
+            isDragging = true;
+            offsetX = e.pageX; 
+            offsetLeft = $("div.ganttview-slide-container").scrollLeft();
+            offsetY = e.pageY;
+            offsetTop = $(document).scrollTop();
+        })
+        .mousemove(function(e) {
+            if (isDragging) {
+                $("div.ganttview-slide-container").scrollLeft(offsetLeft + (e.pageX - offsetX)*-1);
+                $(document).scrollTop(offsetTop + (e.pageY - offsetY)*-1);
+                e.preventDefault();
+            }
+        })
+        .mouseup(function(e) {
+            var wasDragging = isDragging;
+            isDragging = false;
+        });
     $("div.ganttview-block").mousemove(function(e) { isDragging = false; });
     $("div.ganttview-vtheader-item").mousemove(function(e) { isDragging = false; });
     $("div.ganttview-vtheader-item").mousemove(function(e) { isDragging = false; });
+
+    $('#zoomFactorW')
+        .change( function(e) {
+            var zoomFactorW;
+            zoomFactorW = $('#zoomFactorW').val()*0.001;   
+            $(".ganttview-grid-row-cell").css("width", chart.options.cellWidth * zoomFactorW +"px");
+            $(".ganttview-hzheader-day").css("width", chart.options.cellWidth * zoomFactorW +"px");
+            //$(".ganttview-hzheader-month").css("width", chart.options.cellWidth / chart.options.zoomFactorMonthW * zoomFactorW +"px");
+            // $('.ganttview-hzheader-month').each(function() {
+            //     $(this).css("width","0px");
+            // });
+        });
+    $('#zoomFactorH')
+        .change( function(e) {
+            var zoomFactorH;
+            zoomFactorH = $('#zoomFactorH').val()*0.001;   
+            $(".ganttview-grid-row-cell").css("height", chart.options.cellHeight * zoomFactorH +"px");
+        });
+    // $('#zoomFactorMonthW')
+    //     .change( function(e) {
+    //         var zoomFactorMonthW;
+    //         zoomFactorMonthW = $('#zoomFactorMonthW').val()*0.001;   
+    //         $('.ganttview-hzheader-month').each(function() {
+    //             //console.log($(this).width());
+    //             //$(this).css("width", $(this).width()/lstMthFactor*zoomFactorMonthW "0px");
+    //         });
+    //     });        
 });
