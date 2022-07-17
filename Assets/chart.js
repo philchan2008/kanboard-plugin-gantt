@@ -101,7 +101,9 @@ Gantt.prototype.renderVerticalHeader = function() {
                 .append(jQuery("<a>", {"href": this.data[i].link}).text(this.data[i].title));
         }
         if ( i ==0 ) {
-            seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(zoomScale<0.95||zoomScale>1.10?'Zoom level is '+Math.round(zoomScale*100)+'%':''));
+            //seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(zoomScale<0.95||zoomScale>1.10?'Zoom level is '+Math.round(zoomScale*100)+'%':''));
+            seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(''));
+            console.log('Zoom level is '+Math.round(zoomScale*100)+'%');
         }
         seriesDiv.append(jQuery("<div>", {
             "class": "ganttview-vtheader-series-name",
