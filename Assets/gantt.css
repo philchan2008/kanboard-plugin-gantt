@@ -148,6 +148,16 @@ div.ganttview-progress-bar {
     opacity: 0.4;
 }
 
+.menu-inline {
+    font-size: .9em;
+}
+
 .markdown {
     margin-left: 8px; 
+}
+
+.groupBox {
+    border: 1px solid #d1d1d1; 
+    border-radius: 2px;
+    padding: 2px;
 }

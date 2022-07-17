@@ -1,7 +1,7 @@
 <section id="main">
     <?= $this->projectHeader->render($project, 'TaskGanttController', 'show', false, 'Gantt') ?>
     <div class="menu-inline">
-        <ul>
+        <ul class="views">
             <li <?= $sorting === 'id' ? 'class="active"' : '' ?>>
                 <?= $this->url->icon('sort-numeric-asc', t('Sort by ID'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'id', 'plugin' => 'Gantt')) ?>
             </li>
@@ -18,7 +18,16 @@
                 <?= $this->modal->large('plus', t('Add task'), 'TaskCreationController', 'show', array('project_id' => $project['id'])) ?>
             </li>
             <li>
-                <!-- <input type="range" id="zoomFactorMonthW" name="zoomFactorMonthW"  min="850" max="1050" /> --->
+            <span  >
+                <i class="fa fa-th"></i>
+                <i class="fa fa-arrows-h" >
+                <input type="range" id="zoomFactorW" name="zoomFactorW"  min="850" max="1050"/>
+                </i>
+                <i class="fa fa-arrows-v" >
+                <input type="range" id="zoomFactorH" name="zoomFactorH"  min="750" max="1250" />
+                </i>
+                <i class="fa fa-th-large"></i>
+            </span>  
             </li>
         </ul>        
     </div>
@@ -37,17 +46,7 @@
         <span>
             <?= t('Moving or resizing a task will change the start and due date of the task.') ?>
         </span>
-        <span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
-        <span>
-            <i class="fa fa-arrows-h" >
-            <input type="range" id="zoomFactorW" name="zoomFactorW"  min="850" max="1050"/>
-            </i>
-            <i class="fa fa-arrows-v" >
-            <input type="range" id="zoomFactorH" name="zoomFactorH"  min="750" max="1250" />
-            </i>
-        </span>     
+           
         </p>
         
     <?php else: ?>
