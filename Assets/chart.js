@@ -49,7 +49,7 @@ Gantt.prototype.show = function() {
     var startDate = range[0];
     var endDate = range[1];
     var container = $(this.options.container);
-    var chart = jQuery("<div>", { "class": "ganttview" });
+    var chart = jQuery("<div>", { "class": "ganttview", "id": "grantview" });
     chart.append(this.renderVerticalHeader());
     chart.append(this.renderSlider(startDate, endDate));
     container.append(chart);

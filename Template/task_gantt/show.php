@@ -29,6 +29,12 @@
                 <i class="fa fa-th-large"></i>
             </span>  
             </li>
+            <!-- <li>
+            <a href="" class="view-refresh"><i class="fa fa-refresh" aria-hidden="true"></i>Refresh</a>
+            </li>
+            <li>
+            <a href="javascript:" id="button-print"><i class="fa fa-print" aria-hidden="true"></i>Print</a>
+            </li> -->
         </ul>        
     </div>
 
@@ -53,3 +59,5 @@
         <p class="alert"><?= t('There is no task in your project.') ?></p>
     <?php endif ?>
 </section>
+
+
