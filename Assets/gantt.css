@@ -162,3 +162,7 @@ div.ganttview-progress-bar {
     padding: 2px;
 }
 
+input.ganttTaskTitleWidth {
+    min-width: none;
+    max-width: 200px;
+}

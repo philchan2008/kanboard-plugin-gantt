@@ -102,7 +102,7 @@ Gantt.prototype.renderVerticalHeader = function() {
         }
         if ( i ==0 ) {
             //seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(zoomScale<0.95||zoomScale>1.10?'Zoom level is '+Math.round(zoomScale*100)+'%':''));
-            seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append(''));
+            seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-title"}).append('<input type="range" id="ganttTaskTitleWidth" name="ganttTaskTitleWidth"  min="50" max="1500" value="500" style="min-width:50px; width:100px; padding:5px; margin: 5px" />'));
             console.log('Zoom level is '+Math.round(zoomScale*100)+'%');
         }
         seriesDiv.append(jQuery("<div>", {
@@ -111,7 +111,6 @@ Gantt.prototype.renderVerticalHeader = function() {
         }).append(content));
         
     }
-
     itemDiv.append(seriesDiv);
     headerDiv.append(itemDiv);
 

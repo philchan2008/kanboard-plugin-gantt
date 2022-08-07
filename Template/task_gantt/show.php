@@ -21,7 +21,7 @@
             <span  >
                 <i class="fa fa-th"></i>
                 <i class="fa fa-arrows-h" >
-                <input type="range" id="zoomFactorW" name="zoomFactorW"  min="850" max="1050"/>
+                <input type="range" id="zoomFactorW" name="zoomFactorW"  min="850" max="1050" />
                 </i>
                 <i class="fa fa-arrows-v" >
                 <input type="range" id="zoomFactorH" name="zoomFactorH"  min="750" max="1250" />

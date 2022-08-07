@@ -23,7 +23,7 @@ KB.on('dom.ready', function () {
         $("#zoomFactorW").val(chart.sysopts.zoomFactorW*1000);
         $("#zoomFactorH").val(chart.sysopts.zoomFactorH*1000);
         $("#zoomFactorMonthW").val(chart.sysopts.zoomFactorMonthW*1000);
-
+        
         chart.show();
         //KB.tooltip();
     }
@@ -75,6 +75,7 @@ KB.on('dom.ready', function () {
             //     $(this).css("width","0px");
             // });
         });
+
     $('#zoomFactorH')
         .change( function(e) {
             var zoomFactorH;
@@ -82,6 +83,15 @@ KB.on('dom.ready', function () {
             console.log("zoomFactorH: "+zoomFactorH);
             $(".ganttview-grid-row-cell").css("height", chart.options.cellHeight * zoomFactorH +"px");
         });
+
+    $('#ganttTaskTitleWidth')
+        .change( function(e) {
+            var ganttTaskTitleWidth;
+            ganttTaskTitleWidth = $('#ganttTaskTitleWidth').val(); 
+            console.log("ganttTaskTitleWidth: "+ganttTaskTitleWidth);
+            $(".ganttview-vtheader-series-name").css("width", ganttTaskTitleWidth +"px");
+        });
+
     // $('#zoomFactorMonthW')
     //     .change( function(e) {
     //         var zoomFactorMonthW;
@@ -92,16 +102,17 @@ KB.on('dom.ready', function () {
     //         });
     //     });   
 
-    //$('#button-print').click(function(){
-    //    html2canvas($('#grantview'), 
-    //    {
-    //      onrendered: function (canvas) {
-    //        var a = document.createElement('a');
-    //        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
-    //        a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-    //        a.download = 'image.jpg';
-    //        a.click();
-    //      }
-    //    });
-    //  });    
+    // $('#button-print').click(function(){
+    //     html2canvas($('#grantview'), 
+    //     {
+    //       onrendered: function (canvas) {
+    //         var a = document.createElement('a');
+    //         // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+    //         a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+    //         a.download = 'image.jpg';
+    //         a.click();
+    //       }
+    //     });
+    // });    
 });
+
