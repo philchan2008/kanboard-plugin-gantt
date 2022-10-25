@@ -89,7 +89,8 @@ Gantt.prototype.renderVerticalHeader = function() {
                     .append("&nbsp;");
 
         if (this.data[i].type == "task") {
-            content.append(jQuery('<strong>').text('#'+this.data[i].id+' '));
+            content.append(jQuery('<strong>').text('#' + this.data[i].id + ' '));
+            //content.append(jQuery('<small>').text('P' + this.data[i].color.background + ' '));
             content.append(jQuery("<a>", {"href": this.data[i].link, "title": this.data[i].title}).text(this.data[i].title));
         }
         else {
@@ -107,7 +108,7 @@ Gantt.prototype.renderVerticalHeader = function() {
         }
         seriesDiv.append(jQuery("<div>", {
             "class": "ganttview-vtheader-series-name",
-            "css": { "height": this.options.cellHeight * this.sysopts.zoomFactorH + "px" }
+            "css": { "height": this.options.cellHeight * this.sysopts.zoomFactorH + "px", background: this.data[i].color.background }
         }).append(content));
         
     }
@@ -290,7 +291,7 @@ Gantt.prototype.getVerticalHeaderTooltip = function(record) {
 Gantt.prototype.getTaskTooltip = function(record) {
     var assigneeLabel = $(this.options.container).data("label-assignee");
     var tooltip = $('<span>')
-        .append($('<strong>').text(record.column_title + ' (' + record.progress + ')'))
+        .append($('<strong>').text(record.column_title + ' (' + record.progress + ') '))
         .append($('<br>'))
         .append($('<span>').text('#' + record.id + ' ' + record.title))
         .append($('<br>'))
