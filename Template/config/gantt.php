@@ -8,8 +8,8 @@
     <fieldset>
         <legend><?= t('Gantt chart') ?></legend>
         <?= $this->form->radios('gantt_task_sort', array(
-                'date' => t('Sort by date'),
                 'board' => t('Sort by position'),
+                'date' => t('Sort by date'),
                 'id' => t('Sort by ID#'),
                 'name' => t('Sort by name'),                
             ),
