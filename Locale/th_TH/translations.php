@@ -14,5 +14,6 @@ return array(
     'There is no start date or end date for this project.' => 'ไม่มีวันที่เริ่มหรือวันที่จบของโปรเจคนี้',
     'Projects Gantt chart' => 'แผนภูมิแกรน์ของโปรเจค',
     'Switch to the Gantt chart view' => 'เปลี่ยนเป็นมุมมองแผนภูมิแกรนท์',
+    'Refresh' => 'เยนิเลเม็ก',
+    'KB# Task Name' => 'KB# ชื่องาน',    
 );
-

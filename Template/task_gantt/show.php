@@ -16,7 +16,7 @@
                 <?= $this->url->icon('sort-amount-asc', t('Sort by date'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'date', 'plugin' => 'Gantt')) ?>
             </li>
             <li <?= $sorting === 'id' ? 'class="active"' : '' ?>>
-                <?= $this->url->icon('sort-numeric-asc', t('Sort by ID'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'id', 'plugin' => 'Gantt')) ?>
+                <?= $this->url->icon('sort-numeric-asc', t('Sort by ID#'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'id', 'plugin' => 'Gantt')) ?>
             </li>
             <li <?= $sorting === 'name' ? 'class="active"' : '' ?>>
                 <?= $this->url->icon('sort-numeric-asc', t('Sort by name'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'name', 'plugin' => 'Gantt')) ?>
@@ -37,7 +37,7 @@
                 </span>  
             </li>
             <li>
-            <a href="" class="view-refresh"><i class="fa fa-refresh" aria-hidden="true"></i>Refresh</a>
+            <a href="" class="view-refresh"><i class="fa fa-refresh" aria-hidden="true"></i><?=t('Refresh')?></a>
             </li>
             <!-- <li>
             <a href="javascript:" id="button-print"><i class="fa fa-print" aria-hidden="true"></i>Print</a>

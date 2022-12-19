@@ -14,5 +14,7 @@ return array(
     'There is no start date or end date for this project.' => 'Bu proje için başlangıç veya bitiş tarihi yok.',
     'Projects Gantt chart' => 'Projeler Gantt diyagramı',
     'Switch to the Gantt chart view' => 'Gantt diyagramı görünümüne geç',
+    'Refresh' => 'Yenilemek',
+    'KB# Task Name' => 'KB# Görev adı',    
 );
 
