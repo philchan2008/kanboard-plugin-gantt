@@ -8,7 +8,7 @@ div.ganttview-hzheader-month, div.ganttview-hzheader-day, div.ganttview-vtheader
 div.ganttview-vtheader-title {
     height: 41px;
     font-size: small;
-    color: red;
+    color: rgba(56, 55, 55, 0.697);
 }
 
 div.ganttview-hzheader-month, div.ganttview-hzheader-day {
@@ -166,4 +166,10 @@ div.ganttview-progress-bar {
 input.ganttTaskTitleWidth {
     min-width: none;
     max-width: 200px;
+}
+
+input.grant-view-slide-controls {
+    margin-bottom: -5px;
+    min-width:50px; 
+    width:100px;
 }
