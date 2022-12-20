@@ -31,13 +31,13 @@ class TaskGanttController extends BaseController
 
 
         if ($sorting === 'date') {
-            $filter->getQuery()->asc(TaskModel::TABLE.'.date_started')->asc(TaskModel::TABLE.'.date_creation');
+            $filter->getQuery()->asc(TaskModel::TABLE.'.date_due')->asc(TaskModel::TABLE.'.date_started')->asc(TaskModel::TABLE.'.date_creation');
         } elseif ($sorting === 'id') {
             $filter->getQuery()->asc(TaskModel::TABLE.'.id'); 
         } elseif ($sorting === 'name') {
             $filter->getQuery()->asc(TaskModel::TABLE.'.title'); 
         } else {
-            $filter->getQuery()->asc('column_position')->asc(TaskModel::TABLE.'.position');
+            $filter->getQuery()->desc('column_position')->asc(TaskModel::TABLE.'.position');
         }
 
         $this->response->html($this->helper->layout->app('Gantt:task_gantt/show', array(

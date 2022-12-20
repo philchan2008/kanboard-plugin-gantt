@@ -1,10 +1,11 @@
 <?php
 
 return array(
-    'Sort by name' => '名稱排序',
-    'Sort by ID#' => 'ID#排序',
-    'Sort by position' => '按位置排序',
-    'Sort by date' => '按日期排序',
+    'Sort by' => '排序按',
+    'Name' => '名稱',
+    'ID#' => 'ID#',
+    'Position' => '位置',
+    'Date' => '日期',
     'Add task' => '添加任務',
     'There is no start date or due date for this task.' => '當前任務沒有開始或結束時間。',
     'Moving or resizing a task will change the start and due date of the task.' => '移動或者重設任務將改變任務開始和結束時間。',

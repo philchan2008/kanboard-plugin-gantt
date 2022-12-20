@@ -8,18 +8,21 @@
                         <input type="range" class="grant-view-slide-controls" id="ganttTaskTitleWidth" name="ganttTaskTitleWidth"  min="50" max="1500" value="500" />
                     </i>
                 </span>
-            </li>  
+            </li>
+            <li>
+                <i><?=t('Sort by')?></i>
+            </li>
             <li <?= $sorting === 'board' ? 'class="active"' : '' ?>>
-                <?= $this->url->icon('sort-numeric-asc', t('Sort by position'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'board', 'plugin' => 'Gantt')) ?>
+                <?= $this->url->icon('sort-numeric-asc', t('Position'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'board', 'plugin' => 'Gantt')) ?>
             </li>
             <li <?= $sorting === 'date' ? 'class="active"' : '' ?>>
-                <?= $this->url->icon('sort-amount-asc', t('Sort by date'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'date', 'plugin' => 'Gantt')) ?>
+                <?= $this->url->icon('sort-amount-asc', t('Date'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'date', 'plugin' => 'Gantt')) ?>
             </li>
             <li <?= $sorting === 'id' ? 'class="active"' : '' ?>>
-                <?= $this->url->icon('sort-numeric-asc', t('Sort by ID#'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'id', 'plugin' => 'Gantt')) ?>
+                <?= $this->url->icon('sort-numeric-asc', t('ID#'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'id', 'plugin' => 'Gantt')) ?>
             </li>
             <li <?= $sorting === 'name' ? 'class="active"' : '' ?>>
-                <?= $this->url->icon('sort-numeric-asc', t('Sort by name'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'name', 'plugin' => 'Gantt')) ?>
+                <?= $this->url->icon('sort-numeric-asc', t('Name'), 'TaskGanttController', 'show', array('project_id' => $project['id'], 'sorting' => 'name', 'plugin' => 'Gantt')) ?>
             </li>
             <li>
                 <?= $this->modal->large('plus', t('Add task'), 'TaskCreationController', 'show', array('project_id' => $project['id'])) ?>
