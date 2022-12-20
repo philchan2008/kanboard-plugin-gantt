@@ -15,6 +15,5 @@ return array(
     'Projects Gantt chart' => 'Projeler Gantt diyagramı',
     'Switch to the Gantt chart view' => 'Gantt diyagramı görünümüne geç',
     'Refresh' => 'Yenilemek',
-    'KB# Task Name' => 'KB# Görev adı',    
 );
 

@@ -17,6 +17,5 @@ return array(
     'Projects Gantt chart' => '项目甘特图',
     'Switch to the Gantt chart view' => '切换到甘特图',
     'Refresh' => '刷新',
-    'KB# Task Name' => 'KB# 任务名称',
 );
 

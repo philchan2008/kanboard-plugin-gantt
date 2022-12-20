@@ -81,7 +81,9 @@ KB.on('dom.ready', function () {
             var zoomFactorH;
             zoomFactorH = $('#zoomFactorH').val()*0.001; 
             console.log("zoomFactorH: "+zoomFactorH);
-            $(".ganttview-grid-row-cell").css("height", chart.options.cellHeight * zoomFactorH +"px");
+            $(".ganttview-grid-row-cell").css("height", chart.options.cellHeight * zoomFactorH + "px");
+            $(".ganttview-vtheader-series-name").css("height", chart.options.cellHeight * zoomFactorH + "px");
+            //$(".ganttview-blocks").css("height", chart.options.cellHeight * zoomFactorH + "px");
         });
 
     $('#ganttTaskTitleWidth')

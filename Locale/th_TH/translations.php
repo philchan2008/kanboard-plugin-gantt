@@ -15,5 +15,4 @@ return array(
     'Projects Gantt chart' => 'แผนภูมิแกรน์ของโปรเจค',
     'Switch to the Gantt chart view' => 'เปลี่ยนเป็นมุมมองแผนภูมิแกรนท์',
     'Refresh' => 'เยนิเลเม็ก',
-    'KB# Task Name' => 'KB# ชื่องาน',    
 );
