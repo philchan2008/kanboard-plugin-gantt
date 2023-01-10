@@ -173,3 +173,12 @@ input.grant-view-slide-controls {
     min-width:50px; 
     width:100px;
 }
+
+span.ganttview-vtheader-taskinfo {
+    position: absolute;
+    font-size: xx-small;
+    color: black;
+    opacity: 0.4;
+    margin-top: 12px;
+    left: 18px;
+}

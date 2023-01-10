@@ -90,15 +90,7 @@ Gantt.prototype.renderVerticalHeader = function() {
 
         if (this.data[i].type == "task") {
             content.append(jQuery("<span>", {
-                "class": "ganttview-vtheader-columntitle",
-                "css": {
-                    "position": "absolute",
-                    "font-size": "xx-small",
-                    "color": "black",
-                    "opacity": "0.5",
-                    "margin": "12px",
-                    "left": "5px"
-                }
+                "class": "ganttview-vtheader-taskinfo"
             }).append(this.data[i].column_title
             + ' ' + this.data[i].progress
             + (this.data[i].assignee ? ' 👤' + this.data[i].assignee : '') 

@@ -3,9 +3,11 @@
     <div class="menu-inline">
         <ul class="views">
             <li>
-                <i class="fa fa-info" >
-                    <input type="checkbox" id="ganttTaskColumnTitle" name="ganttTaskColumnTitle" checked />
-                </i>
+                <span>
+                    <i class="fa fa-info" >
+                        <input type="checkbox" id="ganttVHeadTaskInfo" name="ganttVHeadTaskInfo" checked />
+                    </i>
+                </span>
             </li>
             <li>
                 <span  >

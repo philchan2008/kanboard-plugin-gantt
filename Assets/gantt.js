@@ -94,15 +94,15 @@ KB.on('dom.ready', function () {
             $(".ganttview-vtheader-series-name").css("width", ganttTaskTitleWidth +"px");
         });
     
-    $('#ganttTaskColumnTitle')
+    $('#ganttVHeadTaskInfo')
         .change( function(e) {
-            var ganttTaskColumnTitleIsChecked;
-            ganttTaskColumnTitleIsChecked = $('#ganttTaskColumnTitle').is(":checked"); 
-            console.log("ganttTaskColumnTitleIsChecked: " + ganttTaskColumnTitleIsChecked);
-            if (ganttTaskColumnTitleIsChecked)
-                $(".ganttview-vtheader-columntitle").show(100);
+            var ganttVHeadTaskInfoIsChecked;
+            ganttVHeadTaskInfoIsChecked = $('#ganttVHeadTaskInfo').is(":checked"); 
+            console.log("ganttVHeadTaskInfo: " + ganttVHeadTaskInfoIsChecked);
+            if (ganttVHeadTaskInfoIsChecked)
+                $(".ganttview-vtheader-taskinfo").show(100);
             else
-                $(".ganttview-vtheader-columntitle").hide(100);
+                $(".ganttview-vtheader-taskinfo").hide(100);
         });
 
     // $('#zoomFactorMonthW')
