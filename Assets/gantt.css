@@ -97,11 +97,11 @@ div.ganttview-grid-row-cell {
     border-top: 1px solid #f0f0f0;
 }
 
-div.ganttview-grid-row-cell.ganttview-weekend {
+div.ganttview-weekend {
     background-color: #ffd3d3;
 }
 
-div.ganttview-grid-row-cell.ganttview-today {
+div.ganttview-today {
     background-color: #fcf2c1;
 }
 
