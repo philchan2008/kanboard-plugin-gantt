@@ -89,9 +89,20 @@ Gantt.prototype.renderVerticalHeader = function() {
                     .append("&nbsp;");
 
         if (this.data[i].type == "task") {
+            content.append(jQuery("<span>", {
+                "class": "ganttview-vtheader-columntitle",
+                "css": {
+                    "position": "absolute",
+                    "font-size": "xx-small",
+                    "color": "black",
+                    "opacity": "0.5",
+                    "margin": "12px",
+                    "left": "8px"
+                }
+                }).append(this.data[i].column_title));
             content.append(jQuery('<strong>').text('#' + this.data[i].id + ' '));
             //content.append(jQuery('<small>').text('P' + this.data[i].color.background + ' '));
-            content.append(jQuery("<a>", {"href": this.data[i].link, "title": this.data[i].title}).text(this.data[i].title));
+            content.append(jQuery("<a>", { "href": this.data[i].link, "title": this.data[i].title }).text(this.data[i].title));
         }
         else {
             content
