@@ -99,7 +99,12 @@ Gantt.prototype.renderVerticalHeader = function() {
                     "margin": "12px",
                     "left": "5px"
                 }
-                }).append(this.data[i].column_title));
+            }).append(this.data[i].column_title
+            + ' ' + this.data[i].progress
+            + (this.data[i].assignee ? ' 👤' + this.data[i].assignee : '') 
+            + '' + (this.data[i].start ? ' 🕐'+$.datepicker.formatDate('yy-mm-dd', this.data[i].start): '')
+            + '' + (this.data[i].end ? ' ◼️'+$.datepicker.formatDate('yy-mm-dd', this.data[i].end): '')
+            ));
             content.append(jQuery('<strong>').text('#' + this.data[i].id + ' '));
             //content.append(jQuery('<small>').text('P' + this.data[i].color.background + ' '));
             content.append(jQuery("<a>", { "href": this.data[i].link, "title": this.data[i].title }).text(this.data[i].title));

@@ -3,6 +3,11 @@
     <div class="menu-inline">
         <ul class="views">
             <li>
+                <i class="fa fa-info" >
+                    <input type="checkbox" id="ganttTaskColumnTitle" name="ganttTaskColumnTitle" checked />
+                </i>
+            </li>
+            <li>
                 <span  >
                     <i class="fa fa-tasks" >
                         <input type="range" class="grant-view-slide-controls" id="ganttTaskTitleWidth" name="ganttTaskTitleWidth"  min="50" max="1500" value="500" />
