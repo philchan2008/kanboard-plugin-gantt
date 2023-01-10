@@ -97,7 +97,7 @@ Gantt.prototype.renderVerticalHeader = function() {
                     "color": "black",
                     "opacity": "0.5",
                     "margin": "12px",
-                    "left": "8px"
+                    "left": "5px"
                 }
                 }).append(this.data[i].column_title));
             content.append(jQuery('<strong>').text('#' + this.data[i].id + ' '));
