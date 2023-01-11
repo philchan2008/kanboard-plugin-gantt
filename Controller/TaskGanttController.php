@@ -5,6 +5,7 @@ namespace Kanboard\Plugin\Gantt\Controller;
 use Kanboard\Controller\BaseController;
 use Kanboard\Filter\TaskProjectFilter;
 use Kanboard\Model\TaskModel;
+use Kanboard\Model\SwimlaneModel;
 
 /**
  * Tasks Gantt Controller
@@ -37,7 +38,7 @@ class TaskGanttController extends BaseController
         } elseif ($sorting === 'name') {
             $filter->getQuery()->asc(TaskModel::TABLE.'.title'); 
         } else {
-            $filter->getQuery()->desc('column_position')->asc(TaskModel::TABLE.'.position');
+            $filter->getQuery()->asc(SwimlaneModel::TABLE.'.position')->desc('column_position')->asc(TaskModel::TABLE.'.position');
         }
 
         $this->response->html($this->helper->layout->app('Gantt:task_gantt/show', array(
