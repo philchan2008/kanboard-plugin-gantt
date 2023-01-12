@@ -10,6 +10,7 @@ use Kanboard\Core\Filter\FormatterInterface;
  *
  * @package formatter
  * @author  Frederic Guillot
+ * Check Milestone plugin's taskformatter if milestone plugin being used.
  */
 class TaskGanttFormatter extends BaseFormatter implements FormatterInterface
 {

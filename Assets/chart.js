@@ -91,11 +91,14 @@ Gantt.prototype.renderVerticalHeader = function() {
         if (this.data[i].type == "task") {
             content.append(jQuery("<span>", {
                 "class": "ganttview-vtheader-taskinfo"
-            }).append(this.data[i].column_title
-            + ' ' + this.data[i].progress
-            + (this.data[i].assignee ? ' 👤' + this.data[i].assignee : '') 
-            + '' + (this.data[i].start ? ' 🕐'+$.datepicker.formatDate('yy-mm-dd', this.data[i].start): '')
-            + '' + (this.data[i].end ? ' ◼️'+$.datepicker.formatDate('yy-mm-dd', this.data[i].end): '')
+            }).append(
+                (this.data[i].category_name ? '📁' + this.data[i].category_name + ' ' : '')
+                + (this.data[i].swimlane_name ? '🏊'+this.data[i].swimlane_name + ' ': '')
+                + '🔸' + this.data[i].column_title
+                + ' ' + this.data[i].progress
+                + (this.data[i].assignee ? ' 👤' + this.data[i].assignee : '') 
+                + '' + (this.data[i].start ? ' 🕐'+$.datepicker.formatDate('yy-mm-dd', this.data[i].start): '')
+                + '' + (this.data[i].end ? ' ◼️'+$.datepicker.formatDate('yy-mm-dd', this.data[i].end): '')
             ));
             content.append(jQuery('<strong>').text('#' + this.data[i].id + ' '));
             //content.append(jQuery('<small>').text('P' + this.data[i].color.background + ' '));
