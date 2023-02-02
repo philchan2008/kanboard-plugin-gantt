@@ -62,7 +62,7 @@ div.ganttview-vtheader-series-name {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    font-size: medium;
+    font-size: smaller;
 }
 
 div.ganttview-vtheader-series-name a {
