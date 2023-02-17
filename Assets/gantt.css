@@ -175,6 +175,7 @@ input.grant-view-slide-controls {
 }
 
 span.ganttview-vtheader-taskinfo {
+    display: none;
     position: absolute;
     font-size: xx-small;
     color: black;

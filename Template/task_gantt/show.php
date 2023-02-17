@@ -5,7 +5,7 @@
             <li>
                 <span>
                     <i class="fa fa-info" >
-                        <input type="checkbox" id="ganttVHeadTaskInfo" name="ganttVHeadTaskInfo" checked />
+                        <input type="checkbox" id="ganttVHeadTaskInfo" name="ganttVHeadTaskInfo" />
                     </i>
                 </span>
             </li>
